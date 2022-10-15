@@ -15,8 +15,3 @@ be liable for any loss, damage or injury, arising directly or indirectly
 from the use or misuse of the information contained in this material.
 
 
-cylinderMesh/
-    For generating (2D) mesh cylinder mesh
-
-cylinderAndBackground/
-    BlockMesh for background and running
