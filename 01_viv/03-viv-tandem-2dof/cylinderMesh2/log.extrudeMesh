@@ -1,0 +1,78 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2006                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+Build  : _b45f8f6f58-20200629 OPENFOAM=2006
+Arch   : "LSB;label=32;scalar=64"
+Exec   : extrudeMesh
+Date   : Oct 14 2022
+Time   : 16:56:26
+Host   : stokes02.local
+PID    : 36420
+I/O    : uncollated
+Case   : /home/thawtar/00_OpenFOAM_Learning/02_viv_tandem/cylinderMesh2
+nProcs : 1
+trapFpe: Floating point exception trapping enabled (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 5, maxFileModificationPolls 20)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Create mesh for time = 0
+
+Selecting extrudeModel linearNormal
+Selected extrudeModel for linearNormal using coeffs 
+{
+    thickness       0.7;
+}
+
+Extruding from surface using model linearNormal
+Not collapsing any edges after extrusion
+
+Extruding surfaceMesh read from file "constant/triSurface/cylinder.vtk"
+
+Header   : "# vtk DataFile Version 4.0"
+Title    : "vtk output"
+dataType : "ASCII"
+line:4 tag:DATASET
+geomType : POLYDATA
+line:5 tag:POINTS
+Reading 150 numbers representing 150 coordinates.
+line:57 tag:POLYGONS
+Reading 75 faces.
+line:134 tag:POINT_DATA
+line:135 tag:NORMALS
+Reading vector Normals of type float
+line:187 tag:TEXTURE_COORDINATES
+Reading texture coords TCoords dimension 2 of type float
+Read points:150 cellShapes:0 faces:75 lines:0
+
+Cell fields:
+
+
+Point fields:
+Read 1 vectorField fields:
+Size	Name
+----	----
+150	Normals
+
+
+
+Other fields:
+Extruding surface with :
+    points     : 150
+    faces      : 75
+    normals[0] : (0.999122 -8.09094e-19 -0.0418859)
+
+Mesh bounding box : (-1.19895 -0.05 -1.19974) (1.2 0.05 1.19974)
+        with span : (2.39895 0.1 2.39947)
+Merge distance    : 0
+
+Writing mesh to "/home/thawtar/00_OpenFOAM_Learning/02_viv_tandem/cylinderMesh2/constant/region0"
+
+End
+

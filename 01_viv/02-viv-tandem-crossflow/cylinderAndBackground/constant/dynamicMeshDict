@@ -1,0 +1,165 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2006                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      dynamicMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+motionSolverLibs    (rigidBodyMeshMotion);
+
+dynamicFvMesh       dynamicOversetFvMesh;
+
+motionSolver        rigidBodyMotion;
+
+//diffusivity 	    inverseDistance;
+
+
+report          on;
+
+solver
+{
+    type Newmark;
+    //gamma   0.1;    // Velocity integration coefficient
+    //beta    0.1;    // Position integration coefficient
+}
+
+accelerationRelaxation 0.4;
+
+// prescribedRotation requires some sub-iterations to converge faster
+// to desired value of omega.
+nIter   3;
+g               (0 0 0);
+rhoInf          1000;
+rho             rhoInf;
+
+bodies
+{
+    cylinder
+    {
+        type            rigidBody;
+        parent          root;
+	// Density of the solid
+    	rhoSolid        1200;
+
+	Lx              1.0;
+    	Ly              0.24;
+   	Lz              0.4;
+	rhoInf          1000;
+	rho             rhoInf;
+        // To get Tensor of Inertia (symmetrical) use surfaceInertia
+        // here hull is empty shell
+
+        mass            #eval{ $rhoSolid*3.14*$Lx*$Lx*0.1 };
+        inertia           (1 0 0 1 0 1);
+
+        centreOfMass    (0 0 0); // relative to the centreOfMass
+                                        // of parent body
+                                        // (here root = global coord system)
+
+        // Transformation tensor and centre of rotation (CoR)
+        transform       (1 0 0 0 1 0 0 0 1) (0 0 0);
+
+        joint
+        {
+        // These constrains are applied only to body hull,
+        // other bodies need to have their own set
+        // Constraints used for faster run
+
+            type            Pz;//composite;
+            
+        }
+
+        patches         (cylinder);
+        innerDistance   100;    // With overset we want to avoid the mesh
+                                // deformation so have large innerDistance
+        outerDistance   200;
+    }
+
+    cylinder2
+    {
+        type            rigidBody;
+        parent          root;
+	// Density of the solid
+	rhoSolid        1200;
+	rhoInf          1000;
+	rho             rhoInf;
+
+	Lx              1.0;
+    	Ly              0.24;
+    	Lz              0.4;
+	g               (0 0 0);
+	rho             rhoInf;
+	rhoInf          1000;
+
+        // To get Tensor of Inertia (symmetrical) use surfaceInertia
+        // here hull is empty shell
+
+        mass            #eval{ $rhoSolid*3.14*$Lx*$Lx*0.1 };
+        inertia         (1 0 0 1 0 1);
+        centreOfMass    (2.0 0 0); // relative to the centreOfMass
+                                        // of parent body
+                                        // (here root = global coord system)
+
+        // Transformation tensor and centre of rotation (CoR)
+        transform       (1 0 0 0 1 0 0 0 1) (2.0 0 0);
+
+        joint
+        {
+        // These constrains are applied only to body hull,
+        // other bodies need to have their own set
+        // Constraints used for faster run
+
+            type            Pz;//composite;
+           
+        }
+
+        patches         (cylinder2);
+        innerDistance   100;    // With overset we want to avoid the mesh
+                                // deformation so have large innerDistance
+        outerDistance   200;
+    }
+
+    
+
+    
+}
+
+restraints
+{
+    
+    cylinder1Spring
+    {
+        type linearSpring;
+        body cylinder;
+        anchor          (0 0 0);
+        refAttachmentPt (0 0 0);
+        stiffness       40000;
+        damping         0;
+        restLength      0;
+    }
+
+    cylinder2Spring
+    {
+        type linearSpring;
+        body cylinder2;
+        anchor          (2.0 0 0);
+        refAttachmentPt (2.0 0 0);
+        stiffness       40000;
+        damping         0;
+        restLength      0;
+    }
+    
+}
+
+
+
+// ************************************************************************* //

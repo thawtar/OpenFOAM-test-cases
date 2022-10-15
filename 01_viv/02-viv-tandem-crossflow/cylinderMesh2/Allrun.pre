@@ -1,0 +1,13 @@
+#!/bin/sh
+cd "${0%/*}" || exit                                # Run from this directory
+. ${WM_PROJECT_DIR:?}/bin/tools/RunFunctions        # Tutorial run functions
+#------------------------------------------------------------------------------
+foamCleanTutorials
+# Generate mesh from surface (in constant/triSurface)
+runApplication extrudeMesh
+
+# Make front and back type empty
+runApplication createPatch -overwrite
+
+transformPoints -translate '(2.0 0 0)'
+#------------------------------------------------------------------------------

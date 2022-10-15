@@ -1,0 +1,62 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2006                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+Build  : _b45f8f6f58-20200629 OPENFOAM=2006
+Arch   : "LSB;label=32;scalar=64"
+Exec   : createPatch -overwrite
+Date   : Oct 14 2022
+Time   : 16:56:26
+Host   : stokes02.local
+PID    : 36421
+I/O    : uncollated
+Case   : /home/thawtar/00_OpenFOAM_Learning/02_viv_tandem/cylinderMesh2
+nProcs : 1
+trapFpe: Floating point exception trapping enabled (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 5, maxFileModificationPolls 20)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Create polyMesh for time = 0
+
+Reading "system/createPatchDict"
+
+Adding new patch overset2 as patch 3 from 
+{
+    type            overset;
+}
+
+Adding new patch cylinder2 as patch 4 from 
+{
+    type            wall;
+}
+
+Adding new patch frontAndBack as patch 5 from 
+{
+    type            empty;
+}
+
+
+Moving faces from patch otherSide to patch 3
+Moving faces from patch originalPatch to patch 4
+Moving faces from patch sides to patch 5
+
+Doing topology modification to order faces.
+
+Not synchronising points.
+
+Removing patches with no faces in them.
+
+Removing zero-sized patch sides type wall at position 0
+Removing zero-sized patch originalPatch type patch at position 1
+Removing zero-sized patch otherSide type patch at position 2
+Removing patches.
+Writing repatched mesh to 0
+
+End
+
